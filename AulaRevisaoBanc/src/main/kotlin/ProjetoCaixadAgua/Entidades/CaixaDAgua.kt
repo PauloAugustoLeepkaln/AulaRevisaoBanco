@@ -1,10 +1,13 @@
 package ProjetoCaixadAgua.Entidades
 
+import ProjetoCaixadAgua.Enum.Corcaixa
+import ProjetoCaixadAgua.Enum.MaterialCaixa
 import java.math.BigDecimal
 
 class CaixaDAgua (
+    val material : MaterialCaixa,
     val capacidade : Int,
-    val cor : String,
+    val cor : Corcaixa,
     val peso : Double,
     val preco : BigDecimal?,
     val altura : Double,

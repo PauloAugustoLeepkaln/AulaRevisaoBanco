@@ -5,6 +5,33 @@ import ProjetoCaixadAgua.Enum.MaterialCaixa
 import ProjetoCaixadAgua.Enum.Corcaixa
 import ProjetoCaixadAgua.Enum.Material
 
+fun criarTabelaCaixa(){
+    val conectar = EntidadeJDBC(
+        url = "jdbc:postgresql://localhost:5432/projetocaixa",
+        usuario = "postgres",
+        senha = "postgres"
+    )
+
+    val sql = "CREATE TABLE IF NOT EXISTS CaixaDAgua " +
+            " (id serial NOT NULL PRIMARY KEY," +
+            " material varchar(255)," + //Enumeradores serão STRINGS no banco
+            " capacidade float," +
+            " cor varchar(255)," +
+            " peso float," +
+            " preco varchar(255)," +
+            " altura float," +
+            " largura float," +
+            " profundidade float" +
+            ")"
+
+    val banco = conectar.conectarComBanco()
+    val enviarParaBanco = banco!!.createStatement().execute(sql)
+
+    println(enviarParaBanco)//Se retornar false ou 1, deu certo!
+
+    banco.close()//encerra a conexão
+}
+
 fun cadastrarCaixa(){
     /*
     val material : MaterialCaixa,

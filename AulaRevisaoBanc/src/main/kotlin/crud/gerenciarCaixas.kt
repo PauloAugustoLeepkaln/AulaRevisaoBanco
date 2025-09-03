@@ -5,12 +5,13 @@ import ProjetoCaixadAgua.Enum.MaterialCaixa
 import ProjetoCaixadAgua.Enum.Corcaixa
 import ProjetoCaixadAgua.Enum.Material
 
-fun criarTabelaCaixa(){
     val conectar = EntidadeJDBC(
         url = "jdbc:postgresql://localhost:5432/projetocaixa",
         usuario = "postgres",
         senha = "postgres"
     )
+
+fun criarTabelaCaixa(){
 
     val sql = "CREATE TABLE IF NOT EXISTS CaixaDAgua " +
             " (id serial NOT NULL PRIMARY KEY," +
@@ -31,6 +32,8 @@ fun criarTabelaCaixa(){
 
     banco.close()//encerra a conexão
 }
+
+
 
 fun cadastrarCaixa(){
     /*
@@ -87,7 +90,7 @@ fun cadastrarCaixa(){
     println("Profundidade da caixa:")
     val profundidade = readln().toDouble()
 
-    CaixaDAgua(
+    var c = CaixaDAgua(
         material = material,
         capacidade = litros,
         cor = cor,
@@ -97,7 +100,23 @@ fun cadastrarCaixa(){
         peso = peso,
         profundidade = profundidade
     )
+    val banco = conectar.conectarComBanco()!!.prepareStatement(
+        "INSERT INTO CaixaDAgua" +
+                " (material, capacidade, cor, preco, altura, largura, peso, profundidade)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    )
+        banco.setString(1, c.material.name)
+        banco.setDouble(2, c.capacidade!!.toDouble())
+        banco.setString(3, c.cor.name)
+        banco.setString(4, c.preco.toString())
+        banco.setDouble(5, c.altura)
+        banco.setDouble(6, c.largura)
+        banco.setDouble(7, c.peso)
+        banco.setDouble(8, c.profundidade)
 
+        banco.executeUpdate()
+
+        banco.close()
 }
 
 fun editarCaixa(){

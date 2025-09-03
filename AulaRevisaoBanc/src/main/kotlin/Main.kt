@@ -3,6 +3,6 @@ import crud.criarTabelaCaixa
 import ui.menu
 
 fun main() {
-    val gerenciar = criarTabelaCaixa()
+    criarTabelaCaixa()//precisa ser o primeiro
     menu()
 }

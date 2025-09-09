@@ -4,8 +4,9 @@ import ProjetoCaixadAgua.Entidades.CaixaDAgua
 import ProjetoCaixadAgua.Enum.MaterialCaixa
 import ProjetoCaixadAgua.Enum.Corcaixa
 import ProjetoCaixadAgua.Enum.Material
+import java.sql.ResultSet
 
-    val conectar = EntidadeJDBC(
+val conectar = EntidadeJDBC(
         url = "jdbc:postgresql://localhost:5432/projetocaixa",
         usuario = "postgres",
         senha = "postgres"
@@ -121,12 +122,65 @@ fun cadastrarCaixa(){
 
 fun editarCaixa(){
 
+
+
 }
 
 fun listarCaixas(){
+    val banco = conectar.conectarComBanco()
+    val sql = "SELECT * FROM CaixaDAgua"
+    //Após consultar o banco usando um SQL junto da função executeQuery
+    //a consulta, se acertiva, retorna um array de respostas
+    val  resultados : ResultSet = banco!!.createStatement().executeQuery(sql)
 
+    while (resultados.next()){
+        //Para cada consulta, use o nome que está no banco!
+        println("----------------------------------------------")
+        println("id: ${resultados.getString("id")}")
+        println("material: ${resultados.getString("material")}")
+        println("capacidade: ${resultados.getString("capacidade")}")
+        println("cor: ${resultados.getString("cor")}")
+        println("peso: ${resultados.getString("peso")}")
+        println("preco: ${resultados.getString("preco")}")
+        println("altura: ${resultados.getString("altura")}")
+        println("largura: ${resultados.getString("largura")}")
+        println("profundidade: ${resultados.getString("profundidade")}")
+    }
 }
 
 fun excluirCaixa(){
+    println("Digite o ID que deseja excluir")
+    val id = readln().toInt()
 
+    val banco = conectar.conectarComBanco()
+    val sqlBusca = "SELECT * FROM CaixaDAgua WHERE id = ?"
+    val resultados = banco!!.prepareStatement(sqlBusca)
+    resultados.setInt(1, id)
+    val retorno = resultados.executeQuery()
+    while(retorno.next()) {
+        println("----------------------------------------------")
+        println("id: ${retorno.getString("id")}")
+        println("material: ${retorno.getString("material")}")
+        println("capacidade: ${retorno.getString("capacidade")}")
+        println("cor: ${retorno.getString("cor")}")
+        println("peso: ${retorno.getString("peso")}")
+        println("preco: ${retorno.getString("preco")}")
+        println("altura: ${retorno.getString("altura")}")
+        println("largura: ${retorno.getString("largura")}")
+        println("profundidade: ${retorno.getString("profundidade")}")
+    }
+
+    println("Tem certeza que deseja excluir esse registro?")
+    val resposta = readln()
+
+    when(resposta) {
+        "sim"-> {
+            val deletar = banco.prepareStatement("DELETE FROM CaixaDAgua WHERE id = ?")
+                deletar.setInt(1, id)//Diz qual é o valor do 1º ponto de interrogação
+            deletar.executeUpdate()//manda a introdução para ser executada no banco
+        }
+        else -> {
+            println("Operação cancelada!")
+        }
+    }
 }

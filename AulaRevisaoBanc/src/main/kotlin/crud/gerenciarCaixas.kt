@@ -120,9 +120,61 @@ fun cadastrarCaixa(){
         banco.close()
 }
 
-fun editarCaixa(){
+fun editarCaixa(c: CaixaDAgua){
+    println("digite o ID")
+    var id = readln.toInt()
+    val banco = conectar.conectarComBanco()
+    val sqlBusca = "SELECT * FROM CaixaDAgua WHERE id = ?"
+    val statement = conecao!!.prepareStatement(jpql)
 
 
+    if id
+    statement.setString(1, c.material.name)
+    statement.setDouble(2, c.capacidade!!)
+    statement.setDouble(3, c.altura)
+    statement.setDouble(4, c.largura)
+    statement.setDouble(5, c.profundidade)
+    statement.setString(6, c.)
+    statement.setLong(7, c.)
+    statement.executeUpdate()
+
+    while (retorno.next()){
+        banco.setString(1, c.material.name)
+        banco.setDouble(2, c.capacidade!!.toDouble())
+        banco.setString(3, c.cor.name)
+        banco.setString(4, c.preco.toString())
+        banco.setDouble(5, c.altura)
+        banco.setDouble(6, c.largura)
+        banco.setDouble(7, c.peso)
+        banco.setDouble(8, c.profundidade)
+    } else {
+        val sql = "UPDATE FROM CaixaDAgua Set" +
+                " material = ?" +
+                " capacidade = ?" +
+                " cor = ?" +
+                " preco = ?" +
+                " altura = ?" +
+                " largura = ?" +
+                " peso = ?" +
+                " profundidade = ?"
+
+        val editar = banco.prepareStatement(sql)
+        editar.setInt(8,id)
+        banco.setString(1, c.material.name)
+        banco.setDouble(2, c.capacidade!!.toDouble())
+        banco.setString(3, c.cor.name)
+        banco.setString(4, c.preco.toString())
+        banco.setDouble(5, c.altura)
+        banco.setDouble(6, c.largura)
+        banco.setDouble(7, c.peso)
+        banco.setDouble(8, c.profundidade)
+        editar.close()
+    }
+
+
+    println("Faça suas alterações: ")
+    cadastrarCaixa(id)
+    banco.close()
 
 }
 
@@ -146,6 +198,8 @@ fun listarCaixas(){
         println("largura: ${resultados.getString("largura")}")
         println("profundidade: ${resultados.getString("profundidade")}")
     }
+    banco.close()
+
 }
 
 fun excluirCaixa(){
@@ -183,4 +237,5 @@ fun excluirCaixa(){
             println("Operação cancelada!")
         }
     }
+    banco.close()
 }

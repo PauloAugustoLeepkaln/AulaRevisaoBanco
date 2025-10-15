@@ -4,6 +4,7 @@ import br.com.unipar.exemplo.Model.Pessoa
 import br.com.unipar.exemplo.database.PessoaRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -31,7 +32,12 @@ class PessoaController(
     fun listarPessoas() : List<Pessoa>{
         return pessoaRepository.findAll()
     }
+    @GetMapping
     fun buscarPessoas() : ResponseEntity<List<Pessoa>>{
+        return ResponseEntity.ok(pessoaRepository.findAll())
+    }
+    @GetMapping("/{id}")
+    fun buscarId(@PathVariable id : Long) : ResponseEntity<List<Pessoa>>{
         return ResponseEntity.ok(pessoaRepository.findAll())
     }
 }

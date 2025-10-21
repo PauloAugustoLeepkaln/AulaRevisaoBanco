@@ -14,5 +14,6 @@ data class Pessoa ( //Por padrão deixar como data class
     val idade : Int = 0,
     val cpf : String = ""
 
+
 ){
 }

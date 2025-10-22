@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 
 //A anotação RestController não pode usar, basicamente é para construir APIs
 //Já a anotação Controller permite ter VIEW
-@CrossOrigin(origins = ["https://localhost:5173"])
+@CrossOrigin(origins = ["http://localhost:5173/"])
 @RestController
 @RequestMapping("/pessoa")
 class PessoaController(
